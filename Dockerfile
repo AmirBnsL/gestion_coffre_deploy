@@ -9,7 +9,7 @@ RUN apt-get update && \
 
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Copy backend code
 COPY gestion_coffre_backend/ ./backend/
@@ -18,7 +18,7 @@ COPY gestion_coffre_backend/ ./backend/
 COPY gestion-coffre/ ./frontend/
 
 # Install backend dependencies
-WORKDIR /var/www/backend
+WORKDIR /var/www/html/backend
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer install --no-interaction --optimize-autoloader
 
@@ -26,22 +26,22 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN docker-php-ext-install pdo pdo_mysql
 
 # Build frontend
-WORKDIR /var/www/frontend
+WORKDIR /var/www/html/frontend
 RUN npm install && npm run build
 
 # Move built frontend to backend public directory
-RUN cp -r dist/* /var/www/backend/public/
+RUN cp -r dist/* /var/www/html/backend/public/
 
 # Set correct permissions for public directory
-RUN chown -R www-data:www-data /var/www/backend/public \
-    && chmod -R 755 /var/www/backend/public
+RUN chown -R www-data:www-data /var/www/html/backend/public \
+    && chmod -R 755 /var/www/html/backend/public
 
 # Copy wait-for-mysql script
 COPY wait-for-mysql.sh /wait-for-mysql.sh
 RUN chmod +x /wait-for-mysql.sh
 
 # Set working directory to backend
-WORKDIR /var/www/backend
+WORKDIR /var/www/html/backend
 
 # Expose port 80
 EXPOSE 80

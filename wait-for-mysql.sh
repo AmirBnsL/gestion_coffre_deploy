@@ -11,4 +11,4 @@ done
 
 echo "MySQL is up!"
 php bin/console doctrine:migrations:migrate --no-interaction
-php -S 0.0.0.0:8000 -t public & cd /var/www/frontend && npm run preview -- --host 0.0.0.0 --port 5173
+php -S 0.0.0.0:8000 -t public & cd /var/www/html/frontend && npm run preview -- --host 0.0.0.0 --port 5173
