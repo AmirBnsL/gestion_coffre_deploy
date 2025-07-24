@@ -1,6 +1,6 @@
 [submodule "gestion_coffre_backend"]
 	path = gestion_coffre_backend
-	url = https://github.com/AmirBnsL/gestion_coffre_backend.git
+	url = git@github.com:AmirBnsL/gestion_coffre_backend.git
 [submodule "gestion-coffre"]
 	path = gestion-coffre
-	url = https://github.com/AmirBnsL/gestion_coffre_frontend.git
+	url = git@github.com:AmirBnsL/gestion_coffre_frontend.git
