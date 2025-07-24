@@ -9,7 +9,7 @@ This repository contains the deployment configuration for the Gestion Coffre app
 To clone this repository along with all submodules in one command:
 
 ```bash
-git clone --recurse-submodules git@github.com/AmirBnsL/gestion_coffre_deploy.git
+git clone --recurse-submodules git@github.com:AmirBnsL/gestion_coffre_deploy.git
 ```
 
 ### If you already cloned without submodules
