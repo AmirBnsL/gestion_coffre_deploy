@@ -3,7 +3,7 @@ services:
   backend:
     build:
       context: ./gestion_coffre_backend
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     env_file:
       - ./gestion_coffre_backend/.env
     ports:
@@ -16,9 +16,7 @@ services:
   frontend:
     build:
       context: ./gestion-coffre
-      dockerfile: Dockerfile
-    ports:
-      - "5173:5173"
+      dockerfile: dockerfile
     volumes:
       - ./gestion-coffre:/app
 
