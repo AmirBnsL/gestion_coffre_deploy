@@ -3,7 +3,7 @@ services:
   backend:
     build:
       context: ./gestion_coffre_backend
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     env_file:
       - ./gestion_coffre_backend/.env
     ports:
