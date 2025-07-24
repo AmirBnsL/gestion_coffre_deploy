@@ -1,0 +1,24 @@
+services:
+  coffre-app:
+    build: .
+    ports:
+      - "8000:8000"
+      - "5173:5173"
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "mysql://coffre_user:coffre_pass@mysql:3306/coffre_db?serverVersion=8.0"
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: coffre_db
+      MYSQL_USER: coffre_user
+      MYSQL_PASSWORD: coffre_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
