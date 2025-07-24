@@ -1,14 +1,27 @@
+
 services:
-  coffre-app:
-    build: .
+  backend:
+    build:
+      context: ./gestion_coffre_backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./gestion_coffre_backend/.env
     ports:
       - "8000:8000"
-      - "5173:5173"
-    restart: unless-stopped
-    environment:
-      DATABASE_URL: "mysql://coffre_user:coffre_pass@mysql:3306/coffre_db?serverVersion=8.0"
+    volumes:
+      - ./gestion_coffre_backend:/var/www/html
     depends_on:
       - mysql
+
+  frontend:
+    build:
+      context: ./gestion-coffre
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./gestion-coffre:/app
+
   mysql:
     image: mysql:8.0
     restart: unless-stopped

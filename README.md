@@ -63,3 +63,38 @@ If you encounter authentication issues when cloning submodules, make sure the su
 2. Clone with submodules: `git clone --recurse-submodules <your-fork-url>`
 3. Make your changes
 4. Submit a pull request
+
+# Production Environment Variables for gestion-coffre-backend
+
+You must provide the following environment variables in your .env file:
+
+- APP_ENV=prod
+- APP_SECRET=<your_app_secret> # Generate using a PHP library, e.g. bin/console secrets:generate-keys or random_bytes()
+- DATABASE_URL=mysql://<user>:<password>@<host>:<port>/<db>?serverVersion=8.0.32&charset=utf8mb4
+- MAILER_DSN=smtp://<user>:<password>@<host>:<port>
+- JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem # Generate using LexikJWTAuthenticationBundle
+- JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem # Generate using LexikJWTAuthenticationBundle
+- JWT_PASSPHRASE=<your_jwt_passphrase>
+
+
+## Notes
+- Generate JWT keys using:
+  ```bash
+  mkdir -p gestion_coffre_backend/config/jwt
+openssl genpkey -algorithm RSA -out gestion_coffre_backend/config/jwt/private.pem -pkeyopt rsa_keygen_bits:4096
+openssl rsa -pubout -in gestion_coffre_backend/config/jwt/private.pem -out gestion_coffre_backend/config/jwt/public.pem
+  ```
+- Set `JWT_SECRET_KEY` and `JWT_PUBLIC_KEY` in `.env` as:
+  ```
+  JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+  JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+  JWT_PASSPHRASE=your_generated_passphrase
+  ```
+- Make sure the key files are readable by your backend container.
+- Restart your backend container after generating the keys and updating `.env`.
+- Generate APP_SECRET using a PHP library or Symfony command:
+  ```bash
+  php -r "echo bin2hex(random_bytes(32));"
+  ```
+- Do not commit secrets to version control.
+- All required environment variables must be present for the container to start.
